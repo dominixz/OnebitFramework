@@ -1,0 +1,14 @@
+# Turn on URL rewriting
+RewriteEngine On
+# Put your installation directory here:
+RewriteBase /
+# Allow these directories and files to be displayed directly:
+# - index.php (DO NOT FORGET THIS!)
+# - robots.txt
+# - favicon.ico
+# - public (folder that contain javascript and css folder)
+RewriteCond $1 ^(index\.php|robots\.txt|favicon\.ico|sitemap\.xml|public)
+# No rewriting
+RewriteRule ^(.*)$ - [PT,L]
+# Rewrite all other URLs to index.php/URL
+RewriteRule ^(.*)$ index.php/$1 [PT,L]

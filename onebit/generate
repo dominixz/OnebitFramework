@@ -1,0 +1,95 @@
+#!/usr/bin/env php
+<?php
+require(dirname(__FILE__) . '/libs/taskman.inc.php');
+require(dirname(__FILE__) . '/libs/inflector_helper.php');
+require(dirname(__FILE__) . '/libs/file_helper.php');
+require(dirname(__FILE__) . '/core.php');
+
+define("ERROR_MSG_ENTER_YOUR_CLASS_NAME","Please enter your class name.\n\n");
+
+taskman_run($argv);
+
+function task_controller($args)
+{
+	
+	if(!isset($args[0]))
+	{
+		echo ERROR_MSG_ENTER_YOUR_CLASS_NAME;
+		exit;	
+	}
+	
+	$name = ucwords(plural(strtolower($args[0])));
+	
+	$data['name'] = $name;
+	
+	template_parse('controllers/onebit_controller',$name,$data);
+	
+}                       
+
+function task_model($args)
+{
+	if(!isset($args[0]))
+	{
+		echo ERROR_MSG_ENTER_YOUR_CLASS_NAME;
+		exit;	
+	}
+	
+	$name = ucwords(singular(strtolower($args[0])));
+	
+	$data['name'] = $name;
+	
+	template_parse('models/onebit_model',$name,$data);
+}
+
+function task_view($args)
+{
+	if(!isset($args[0]))
+	{
+		echo ERROR_MSG_ENTER_YOUR_CLASS_NAME;
+		exit;	
+	}
+	
+	$name = ucwords(plural(strtolower($args[0])));
+	
+	$data['name'] = $name;
+
+	$path = APP_VIEW_PATH.strtolower($name);
+	mkdir($path,0755);	
+	echo "Create ".$path," Directory Completed\n";
+}
+
+/**
+ * @deps controller,model,view
+ */
+function task_all($args)
+{
+	echo "Create Contorller/Model/View \n";
+}
+
+/**
+ * @deps model,view
+ */
+function task_crud($args)
+{
+	if(!isset($args[0]))
+	{
+		echo ERROR_MSG_ENTER_YOUR_CLASS_NAME;
+		exit;	
+	}
+	
+	$name = ucwords(plural(strtolower($args[0])));
+	
+	$data['name'] = $name;
+	$data['lower_name'] = strtolower($name);
+	
+	template_parse('controllers/onebit_crud',$name,$data);
+	
+	$files_to_write = array('index','show','add','edit','delete');
+	
+	foreach($files_to_write as $filename)
+	{
+		$filepath = APP_VIEW_PATH.strtolower($name).'/'.$filename.'.php';
+		write_file($filepath,'',"x");
+		echo "Create ".$filepath. " file completed.\n";
+	}
+}

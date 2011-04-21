@@ -1,0 +1,2 @@
+- jQuery 1.5.2
+- jQuery UI 1.8.11
