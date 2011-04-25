@@ -11,15 +11,7 @@
 |
 */
 
-$config['benchmarks'] 		= FALSE;
-$config['get'] 				= FALSE;
-$config['memory_usage'] 	= FALSE;
-$config['post'] 			= FALSE;
-$config['uri_string']		= FALSE;
-$config['controller_info']	= FALSE;
-$config['queries'] 			= FALSE;
-$config['http_headers'] 	= FALSE;
-$config['config'] 			= FALSE;
+
 
 /* End of file profiler.php */
 /* Location: ./application/config/profiler.php */
